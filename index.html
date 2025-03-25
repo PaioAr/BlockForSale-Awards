@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block For Sale Awards</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@400;600;700;800&family=Raleway:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'raleway': ['Raleway', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'bfs-red': {
+                            DEFAULT: '#e41c1c',
+                            'dark': '#aa0909',
+                            'blood': '#d41a1a',
+                            'burgundy': '#910606',
+                        },
+                        'bfs-black': {
+                            DEFAULT: '#000000',
+                            'soft': '#191919',
+                        },
+                        'bfs-gray': {
+                            'dark': '#3a3a3a',
+                            'medium': '#cccccc',
+                            'light': '#e6e6e6',
+                        },
+                        'bfs-white': '#fdf7f1',
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-bfs-black text-bfs-white font-inter">
+    <!-- Header y Navegación -->
+    <header class="fixed w-full z-50 bg-bfs-black bg-opacity-80 backdrop-blur-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-3xl font-bold font-montserrat">
+                BF<span class="text-bfs-red">S</span>
+            </a>
+            
+            <nav class="hidden md:block">
+                <ul class="flex space-x-8">
+                    <li><a href="#" class="font-raleway hover:text-bfs-red transition-colors">Inicio</a></li>
+                    <li><a href="#about" class="font-raleway hover:text-bfs-red transition-colors">Acerca de</a></li>
+                    <li><a href="#categories" class="font-raleway hover:text-bfs-red transition-colors">Categorías</a></li>
+                </ul>
+            </nav>
+            <button id="login-button" class="bg-bfs-gray-dark hover:bg-bfs-gray-dark/80 px-4 py-2 rounded-full font-raleway font-semibold transition-colors flex items-center text-sm" onclick="">
+                <span class="mr-2 whitespace-nowrap">Conectar Discord</span>
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"></path>
+                </svg>
+            </button>
+            
+            
+            <!-- Menú móvil (se activará con JavaScript) -->
+            <button class="md:hidden text-bfs-white" id="mobile-menu-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Menú móvil desplegable -->
+        <div class="md:hidden hidden bg-bfs-black-soft absolute w-full" id="mobile-menu">
+            <ul class="px-6 py-4 space-y-4">
+                <li><a href="#" class="block font-raleway">Inicio</a></li>
+                <li><a href="#about" class="block font-raleway">Acerca de</a></li>
+                <li><a href="#categories" class="block font-raleway">Categorías</a></li>
+                <li><a href="vote.html" class="block text-bfs-red font-semibold">Votar Ahora</a></li>
+            </ul>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+        <!-- Fondo con degradado -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-black/90 z-0"></div>
+        
+        <!-- Contenido del Hero -->
+        <div class="relative z-10 flex flex-col items-center">
+            <!-- Trofeo animado -->
+            <div class="trophy-animate relative w-60 h-80 mb-12 fade-in">
+                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-36 h-16 bg-gradient-to-r from-bfs-red-burgundy to-bfs-red rounded-lg shadow-lg shadow-bfs-red/30"></div>
+                <div class="absolute bottom-16 left-1/2 -translate-x-1/2 w-28 h-6 bg-gradient-to-r from-bfs-red-burgundy to-bfs-red rounded-md shadow-md shadow-bfs-red/30"></div>
+                <div class="absolute bottom-[88px] left-1/2 -translate-x-1/2 w-32 h-48 bg-gradient-to-br from-bfs-red/70 to-bfs-red-burgundy/90 rounded-t-lg rounded-b-3xl shadow-xl shadow-bfs-red/40"></div>
+            </div>
+            
+            <!-- Título de los premios -->
+            <div class="text-center mb-12 fade-in">
+                <span class="font-montserrat tracking-[0.5em] text-sm md:text-base">BLOCK FOR SALE</span>
+                <h1 class="font-montserrat font-bold text-5xl md:text-7xl tracking-[0.2em] text-bfs-red my-2 drop-shadow-[0_0_10px_rgba(228,28,28,0.7)]">AWARDS</h1>
+                <span class="font-raleway tracking-wider text-xl">2025</span>
+            </div>
+            
+            <!-- Botón de votación -->
+            <a href="vote.html" class="bg-bfs-red px-8 py-3 rounded-full font-montserrat font-semibold text-lg tracking-wider hover:bg-bfs-red-dark transition-colors shadow-lg shadow-bfs-red/30 fade-in">
+                VOTA AHORA
+            </a>
+        </div>
+        
+        <!-- Partículas de fondo (se generarán con JavaScript) -->
+        <div class="absolute inset-0 z-0" id="particles"></div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-bfs-black-soft relative overflow-hidden">
+        <!-- Background shapes with animations -->
+        <div class="absolute inset-0 z-0 opacity-20">
+            <div class="absolute top-10 left-10 w-40 h-40 rounded-full bg-bfs-red-dark animate-float-slow"></div>
+            <div class="absolute bottom-20 left-1/4 w-60 h-60 rounded-full bg-bfs-red-burgundy animate-float-reverse"></div>
+            <div class="absolute top-1/3 right-20 w-28 h-28 rounded-full bg-bfs-red animate-pulse-slow"></div>
+            <div class="absolute bottom-10 right-10 w-20 h-80 rounded-lg bg-bfs-red-dark animate-float-vertical"></div>
+        </div>
+        
+        <!-- Partículas flotantes -->
+        <div class="absolute inset-0 z-0" id="about-particles"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 about-title-fade">
+                <h2 class="font-montserrat font-bold text-5xl md:text-6xl uppercase tracking-wider mb-2">ACERCA DEL</h2>
+                <h3 class="font-raleway font-bold text-xl md:text-2xl text-bfs-red drop-shadow-[0_0_10px_rgba(228,28,28,0.7)]">BLOCK FOR SALE AWARDS</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Text content -->
+                <div class="font-inter leading-relaxed space-y-6">
+                    <p>Los <span class="text-bfs-red font-montserrat font-bold">Block For Sale Awards</span> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                </div>
+                
+                <!-- Example image -->
+                <div class="flex justify-center items-center">
+                    <div class="w-full max-w-md rounded-xl overflow-hidden shadow-2xl shadow-bfs-red/20 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                        <!-- Trophy image placeholder - replace with actual image if available -->
+                        <div class="w-full h-80 bg-gradient-to-br from-bfs-red/70 to-bfs-red-burgundy flex items-center justify-center">
+                            <div class="trophy-animate relative w-40 h-60">
+                                <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-10 bg-gradient-to-r from-bfs-red-burgundy to-bfs-red rounded-lg shadow-lg shadow-bfs-red/30"></div>
+                                <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-20 h-4 bg-gradient-to-r from-bfs-red-burgundy to-bfs-red rounded-md shadow-md shadow-bfs-red/30"></div>
+                                <div class="absolute bottom-[56px] left-1/2 -translate-x-1/2 w-24 h-32 bg-gradient-to-br from-bfs-red/70 to-bfs-red-burgundy/90 rounded-t-lg rounded-b-3xl shadow-xl shadow-bfs-red/40"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Category section -->
+    <section id="categories" class="py-24 bg-bfs-black relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 categories-title-fade">
+                <h2 class="font-montserrat text-3xl md:text-4xl uppercase tracking-wider mb-2">CATEGORÍAS</h2>
+                <h3 class="font-raleway text-xl text-bfs-red">RECONOCIMIENTOS</h3>
+            </div>
+            
+            <!-- Contenedor del carrusel -->
+            <div class="relative">
+                <!-- Flechas de navegación -->
+                <button class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-bfs-red/50 hover:bg-bfs-red rounded-full w-10 h-10 flex items-center justify-center text-white transition-all" id="prev-category">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                
+                <button class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-bfs-red/50 hover:bg-bfs-red rounded-full w-10 h-10 flex items-center justify-center text-white transition-all" id="next-category">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                
+                <!-- Carrusel infinito -->
+                <div class="overflow-hidden">
+                    <div class="flex transition-transform duration-500 ease-in-out" id="categories-carousel">
+                        <!-- Las tarjetas de categorías se generarán dinámicamente con JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Indicadores de paginación -->
+                <div class="flex justify-center mt-8 space-x-2" id="carousel-indicators"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+<footer class="bg-bfs-black-soft pt-16 pb-8">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <!-- Columna 1 -->
+            <div>
+                <h3 class="font-raleway text-xl text-bfs-red mb-6">Block For Sale Awards</h3>
+                <p class="font-inter text-bfs-gray-medium mb-4">Celebrando lo mejor de nuestra comunidad de Discord desde 2025.</p>
+                <p class="font-inter text-bfs-gray-medium">Reconociendo el talento, la creatividad y la dedicación de nuestros miembros.</p>
+            </div>
+            
+            <!-- Columna 2 -->
+            <div>
+                <h3 class="font-raleway text-xl text-bfs-red mb-6">Enlaces Rápidos</h3>
+                <ul class="space-y-3">
+                    <li><a href="#" class="font-inter text-bfs-gray-medium hover:text-bfs-red transition-colors">Inicio</a></li>
+                    <li><a href="#about" class="font-inter text-bfs-gray-medium hover:text-bfs-red transition-colors">Acerca de</a></li>
+                    <li><a href="#categories" class="font-inter text-bfs-gray-medium hover:text-bfs-red transition-colors">Categorías</a></li>
+                    <li><a href="vote.html" class="font-inter text-bfs-gray-medium hover:text-bfs-red transition-colors">Votar</a></li>
+                </ul>
+            </div>
+            
+            <!-- Columna 3 -->
+            <div>
+                <h3 class="font-raleway text-xl text-bfs-red mb-6">Community Staffs</h3>
+                <div class="flex flex-wrap items-end gap-8"> <!-- items-end para alinear por la base -->
+                    <!-- Contribuyente 1 -->
+                    <div class="flex flex-col items-center">
+                        <div class="avatar-container">
+                            <div class="avatar-circle"></div>
+                            <img src="https://visage.surgeplay.com/full/128/zPaio_" alt="zPaio_" class="minecraft-skin" />
+                        </div>
+                        <div class="text-center mt-2">
+                            <p class="font-inter text-bfs-white">zPaio_</p>
+                            <p class="font-inter text-xs text-bfs-red">DEVELOPER</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Contribuyente 1 -->
+                    <div class="flex flex-col items-center">
+                        <div class="avatar-container">
+                            <div class="avatar-circle"></div>
+                            <img src="https://visage.surgeplay.com/full/128/Stryker_L" alt="Stryker_L" class="minecraft-skin" />
+                        </div>
+                        <div class="text-center mt-2">
+                            <p class="font-inter text-bfs-white">Stryker_L</p>
+                            <p class="font-inter text-xs text-bfs-red">MOD</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Contribuyente 3 -->
+                    <div class="flex flex-col items-center">
+                        <div class="avatar-container">
+                            <div class="avatar-circle"></div>
+                            <img src="https://visage.surgeplay.com/full/128/adreanup" alt="adreanup" class="minecraft-skin" />
+                        </div>
+                        <div class="text-center mt-2">
+                            <p class="font-inter text-bfs-white">Adreanup</p>
+                            <p class="font-inter text-xs text-bfs-red">OWNER</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        <div class="border-t border-bfs-gray-dark pt-8 text-center">
+            <p class="font-inter text-sm text-bfs-gray-medium">&copy; 2025 Block For Sale Awards. Todos las Cumeadas reservados.</p>
+        </div>
+    </div>
+</footer>
+    
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votar - Block For Sale Awards</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@400;600;700;800&family=Raleway:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'raleway': ['Raleway', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'bfs-red': {
+                            DEFAULT: '#e41c1c',
+                            'dark': '#aa0909',
+                            'blood': '#d41a1a',
+                            'burgundy': '#910606',
+                        },
+                        'bfs-black': {
+                            DEFAULT: '#000000',
+                            'soft': '#191919',
+                        },
+                        'bfs-gray': {
+                            'dark': '#3a3a3a',
+                            'medium': '#cccccc',
+                            'light': '#e6e6e6',
+                        },
+                        'bfs-white': '#fdf7f1',
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="voteStyle.css">
+    <link rel="stylesheet" href="shootingStars.css">
+</head>
+<body class="bg-bfs-black text-bfs-white font-inter">
+    
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-bfs-black bg-opacity-80 backdrop-blur-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-bold font-montserrat">
+                BF<span class="text-bfs-red">S</span>
+            </a>
+            
+            <nav class="hidden md:block">
+                <ul class="flex space-x-8">
+                    <li><a href="index.html" class="font-raleway hover:text-bfs-red transition-colors">Inicio</a></li>
+                    <li><a href="index.html#about" class="font-raleway hover:text-bfs-red transition-colors">Acerca de</a></li>
+                    <li><a href="index.html#categories" class="font-raleway hover:text-bfs-red transition-colors">Categorías</a></li>
+                </ul>
+            </nav>
+            
+            <div class="hidden md:block">
+                <button id="login-button" class="bg-bfs-gray-dark hover:bg-bfs-gray-dark/80 px-6 py-2 rounded-full font-raleway font-semibold transition-colors flex items-center">
+                    Conectar Discord
+                </button>
+            </div>
+            
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-bfs-white" id="mobile-menu-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Voting Content -->
+    
+    <main class="container mx-auto px-4 pt-24 pb-12">
+        <!-- Fixed Category Header -->
+        <div id="fixed-category-header" class="hidden text-center py-6 mb-8">
+            <h2 id="fixed-category-title" class="text-4xl font-extrabold mb-2"></h2>
+            <p id="fixed-category-description" class="text-lg text-bfs-gray-medium max-w-3xl mx-auto"></p>
+        </div>
+
+        <!-- Voting Section -->
+        <section class="bg-bfs-black-soft rounded-xl p-8 backdrop-blur-sm">
+            <div class="flex items-center mb-8 pb-4 border-b border-bfs-gray-dark">
+                <i id="category-icon" data-lucide="heart" class="mr-4 w-10 h-10 text-bfs-red"></i>
+                <h1 id="category-title" class="text-3xl font-bold bg-gradient-to-r from-bfs-red to-bfs-red-dark bg-clip-text text-transparent">Categoría</h1>
+            </div>
+
+            <!-- Nominees Container -->
+            <div id="nominees-container" class="grid gap-8">
+                <!-- Nominees will be dynamically populated here -->
+            </div>
+
+            <!-- Voting Controls -->
+            <div class="mt-12 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <button 
+                    id="submit-vote-button" 
+                    class="bg-gradient-to-r from-bfs-red to-bfs-red-dark hover:from-bfs-red-dark hover:to-bfs-red-burgundy px-8 py-3 rounded-full font-medium text-lg disabled:opacity-50 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg"
+                    disabled
+                >
+                    Confirmar Voto
+                </button>
+                <button 
+                    id="next-category-button" 
+                    class="bg-bfs-black hover:bg-bfs-gray-dark px-8 py-3 rounded-full font-medium text-lg hidden transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border border-bfs-gray-dark hover:border-bfs-red"
+                >
+                    Siguiente Categoría →
+                </button>
+            </div>
+        </section>
+
+        <div id="entry-modal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-lg">
+            <div class="bg-gradient-to-br from-bfs-black to-bfs-black-soft rounded-2xl max-w-4xl w-full overflow-hidden border border-bfs-gray-dark/50">
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-2/5 bg-bfs-red/10 p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-bfs-gray-dark/30">
+                        <div id="user-profile-section" class="text-center">
+                            <img 
+                                id="user-discord-avatar" 
+                                src="resources/default-photo-discord.jpg" 
+                                alt="Discord Avatar" 
+                                class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-bfs-red/50 shadow-lg"
+                            />
+                            <h2 id="user-discord-name" class="text-2xl font-bold text-bfs-white mb-1">
+                                Nombre de Usuario
+                            </h2>
+                            <p id="user-discord-tag" class="text-bfs-gray-medium text-sm">
+                                @username
+                            </p>
+                        </div>
+                    </div>
+                    <div class="md:w-3/5 p-8 text-bfs-white">
+                        <h2 class="text-3xl font-bold text-bfs-red mb-6">Términos y Condiciones</h2>
+                        <div class="space-y-4 text-bfs-gray-medium">
+                            <p>
+                                Al participar en los premios de Block For Sale, aceptas los siguientes términos:
+                            </p>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <svg class="w-5 h-5 text-bfs-red mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Solo puedes votar <strong>una vez</strong> en cada categoría.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-5 h-5 text-bfs-red mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Una vez confirmados tus votos, <strong>no podras modificarlos</strong>.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-5 h-5 text-bfs-red mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Tus votos son <strong>confidenciales </strong> y no seran compartidos <strong>publicamente.</strong></span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-5 h-5 text-bfs-red mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Solo los miembros <strong>verificados</strong> del servidor pueden <strong>participar.</strong></span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-5 h-5 text-bfs-red mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Los votos se <strong>registran</strong> con tu  <strong>ID</strong> de <strong>Discord</strong> para garantizar la <strong>integridad.</strong></span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-5 h-5 text-bfs-red mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Si estas  <strong>nominado</strong> no te puedes  <strong>auto votar.</strong></span>
+                                </li>
+                            <div class="flex items-start mt-6">
+                                <input 
+                                    type="checkbox" 
+                                    id="terms-checkbox" 
+                                    class="mt-1 mr-3 w-5 h-5 rounded bg-bfs-black border-bfs-gray-medium focus:ring-bfs-red focus:ring-2"
+                                />
+                                <label for="terms-checkbox" class="text-sm">
+                                    He leído y acepto los términos y condiciones
+                                </label>
+                            </div>
+                            <button 
+                                id="start-voting-btn" 
+                                disabled
+                                class="w-full mt-6 bg-gradient-to-r from-bfs-red to-bfs-red-dark hover:from-bfs-red-dark hover:to-bfs-red py-3 rounded-full font-medium transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:transform-none"
+                            >
+                                Comenzar a Votar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Intro Modal -->
+        <div id="category-intro" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
+            <div class="text-center max-w-2xl px-6">
+                <h2 id="category-intro-title" class="text-6xl font-bold mb-4 text-bfs-red opacity-0 transform translate-y-10 transition-all duration-1000"></h2>
+                <p id="category-intro-description" class="text-xl text-bfs-gray-medium opacity-0 transform translate-y-10 transition-all duration-1000 delay-300"></p>
+            </div>
+        </div>
+
+        <!-- Nominee Details Modal -->
+        <div id="nominee-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4">
+            <div class="bg-bfs-black-soft rounded-lg max-w-4xl w-full overflow-hidden">
+                <div class="p-8">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <img id="modal-nominee-image" src="" alt="Nominee" class="w-full h-auto rounded-lg mb-4">
+                        </div>
+                        <div class="md:w-2/3">
+                            <h3 id="modal-nominee-name" class="text-2xl font-bold mb-2"></h3>
+                            <p id="modal-nominee-description" class="text-bfs-gray-medium mb-6"></p>
+                            <button id="confirm-vote-modal" class="bg-bfs-red hover:bg-bfs-red-dark px-6 py-2 rounded-full">
+                                Confirmar Voto
+                            </button>
+                            <button id="close-nominee-modal" class="ml-4 bg-bfs-black hover:bg-bfs-gray-dark px-6 py-2 rounded-full">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <template id="nominee-card-template">
+            <div class="nominee-card group transition-all duration-300 hover:shadow-red-500/20">
+                <div class="relative overflow-hidden rounded-t-lg h-48 bg-bfs-gray-dark flex items-center justify-center">
+                    <img src="resources/default-photo-discord.jpg" alt="Nominee" class="w-32 h-32 object-cover rounded-full border-4 border-bfs-red/30 group-hover:border-bfs-red/80 transition-all duration-300">
+                </div>
+                <div class="p-6">
+                    <h3 class="nominee-name text-xl font-bold mb-3 group-hover:text-bfs-red transition-colors duration-300">Nombre del Nominado</h3>
+                    <p class="nominee-description text-bfs-gray-medium mb-6 text-sm">Descripción del nominado</p>
+                    <div class="flex items-center justify-center">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <div class="relative">
+                                <input 
+                                    type="radio" 
+                                    name="nominee" 
+                                    class="nominee-radio sr-only"
+                                />
+                                <div class="w-6 h-6 rounded-full border-2 border-bfs-gray-medium flex items-center justify-center transition-all duration-200 group-hover:border-bfs-red">
+                                    <div class="w-3 h-3 rounded-full bg-bfs-red opacity-0 transition-all duration-200"></div>
+                                </div>
+                            </div>
+                            <span class="text-bfs-gray-medium group-hover:text-white transition-colors duration-300">Votar</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </main>
+
+    <!-- Background Animation -->
+    <div class="background">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+    <script type="module" src="voteScript.js"></script>
+</body>
+</html>
